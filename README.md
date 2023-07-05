@@ -35,3 +35,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 
 (Supabase)[https://supabase.com/dashboard/projects#]
+(GoogleConsole - Oauth)[https://console.cloud.google.com/]
