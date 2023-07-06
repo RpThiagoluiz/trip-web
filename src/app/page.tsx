@@ -1,18 +1,19 @@
-'use client'
-import {  useSession } from 'next-auth/react'
+import QuickSearch from "./components/QuickSearch"
+import RecommendedTrips from "./components/RecommendedTrips"
+import TripSearch from "./components/TripSearch"
+
 
 export const metadata = {
   title: "Trips"
 }
 
 export default function Home() {
-
-  const {data} = useSession()
-
   return (
-  <div>
-  <h1>HELLO</h1>
+  <>
+    <TripSearch />
+    <QuickSearch />
+    <RecommendedTrips />
     
-  </div>
+  </>
   )
 }
