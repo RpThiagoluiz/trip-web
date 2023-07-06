@@ -1,10 +1,18 @@
+'use client'
+import {  useSession } from 'next-auth/react'
 
 export const metadata = {
-  title: "THIAGO"
+  title: "Trips"
 }
 
 export default function Home() {
+
+  const {data} = useSession()
+
   return (
-  <h1>Hello Word</h1>
+  <div>
+  <h1>HELLO</h1>
+    
+  </div>
   )
 }
