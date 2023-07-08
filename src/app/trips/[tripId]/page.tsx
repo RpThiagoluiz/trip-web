@@ -2,6 +2,7 @@ import { prisma } from '@/lib/prisma';
 import TripHeader from './components/TripHeader';
 import TripReservation from './components/TripReservation';
 import TripDescription from './components/TripDescription';
+import TripHighlights from './components/TripHighlights';
 
 interface Props {
   params: { tripId: string };
@@ -27,6 +28,7 @@ export default async function TripDetails({ params }: Props) {
       <TripHeader tripDetails={tripDetails} />
       <TripReservation tripDetails={tripDetails} />
       <TripDescription description={tripDetails.description} />
+      <TripHighlights highlights={tripDetails.highlights} />
     </div>
   );
 }
