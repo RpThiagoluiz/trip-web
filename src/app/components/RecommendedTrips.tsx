@@ -1,7 +1,6 @@
-import TripItem from "@/components/TripItem";
-import { prisma } from "@/lib/prisma";
-import { Trip } from "@prisma/client";
-
+import TripItem from '@/components/TripItem';
+import { prisma } from '@/lib/prisma';
+import { Trip } from '@prisma/client';
 
 async function getTrips() {
   const trips = await prisma.trip.findMany({});
@@ -16,7 +15,9 @@ const RecommendedTrips = async () => {
     <div className="container mx-auto p-5">
       <div className="flex items-center">
         <div className="w-full h-[1px] bg-grayLighter"></div>
-        <h2 className="px-5 font-medium text-grayPrimary whitespace-nowrap">Recommended Destinations</h2>
+        <h2 className="px-5 font-medium text-grayPrimary whitespace-nowrap">
+          Recommended Destinations
+        </h2>
         <div className="w-full h-[1px] bg-grayLighter"></div>
       </div>
 
