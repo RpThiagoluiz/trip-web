@@ -3,16 +3,16 @@ import Image from 'next/image';
 import ReactCountryFlag from 'react-country-flag';
 
 interface Props {
-  tripDetail: Trip;
+  tripDetails: Trip;
 }
 
-export default function TripHeader({ tripDetail }: Props) {
+export default function TripHeader({ tripDetails }: Props) {
   return (
     <div className="flex flex-col">
       <div className="relative h-[300px] w-full">
         <Image
-          src={tripDetail.coverImage}
-          alt={`Image for ${tripDetail.name}`}
+          src={tripDetails.coverImage}
+          alt={`Image for ${tripDetails.name}`}
           style={{
             objectFit: 'cover',
           }}
@@ -22,17 +22,17 @@ export default function TripHeader({ tripDetail }: Props) {
 
       <div className="flex flex-col p-5">
         <h1 className="font-semibold text-xl text-primaryDarker">
-          {tripDetail.name}
+          {tripDetails.name}
         </h1>
         <div className="flex items-center gap-1 my-1">
-          <ReactCountryFlag countryCode={tripDetail.countryCode} svg />
+          <ReactCountryFlag countryCode={tripDetails.countryCode} svg />
           <p className="text-xs text-grayPrimary underline">
-            {tripDetail.location}
+            {tripDetails.location}
           </p>
         </div>
         <p className="text-xs text-grayPrimary">
           <span className="text-primary font-medium">
-            ${tripDetail.pricePerDay / 100}{' '}
+            ${tripDetails.pricePerDay / 100}{' '}
           </span>
           per day
         </p>
