@@ -33,6 +33,13 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details. -->
 
-
 (Supabase)[https://supabase.com/dashboard/projects#]
 (GoogleConsole - Oauth)[https://console.cloud.google.com/]
+
+Script - json for seeds to populate db.
+
+```
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} --transpile-only src/lib/seed.ts"
+  },
+```
