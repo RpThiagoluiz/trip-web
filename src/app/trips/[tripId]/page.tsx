@@ -1,7 +1,7 @@
-import Image from 'next/image';
 import { prisma } from '@/lib/prisma';
-import ReactCountryFlag from 'react-country-flag';
 import TripHeader from './components/TripHeader';
+import TripReservation from './components/TripReservation';
+import TripDescription from './components/TripDescription';
 
 interface Props {
   params: { tripId: string };
@@ -17,14 +17,16 @@ async function getTripDetails(tripId: string) {
 }
 
 export default async function TripDetails({ params }: Props) {
-  const tripDetail = await getTripDetails(params.tripId);
+  const tripDetails = await getTripDetails(params.tripId);
 
   //TODO: create empty component or error boundary
-  if (!tripDetail) return null;
+  if (!tripDetails) return null;
 
   return (
     <div className="container mx-auto">
-      <TripHeader tripDetail={tripDetail} />
+      <TripHeader tripDetails={tripDetails} />
+      <TripReservation tripDetails={tripDetails} />
+      <TripDescription description={tripDetails.description} />
     </div>
   );
 }
