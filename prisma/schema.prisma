@@ -16,7 +16,7 @@ model Trip {
   location     String
   startDate    DateTime
   endDate      DateTime
-  pricePerDay  Decimal           @db.Decimal(8, 2)
+  pricePerDay  Int
   description  String
   coverImage   String
   imagesUrl    String[]
@@ -35,7 +35,7 @@ model TripReservation {
   user      User     @relation(fields: [userId], references: [id])
   startDate DateTime
   endDate   DateTime
-  totalPaid Decimal  @db.Decimal(8, 2)
+  totalPaid Int
 }
 
 model Account {
