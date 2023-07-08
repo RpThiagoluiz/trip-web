@@ -6,7 +6,7 @@ interface InputProps extends CurrencyInputProps {
   errorMessage?: string;
 }
 
-export default function CurrencyInput({ className, error, errorMessage, ...props }: InputProps) {
+export default function CurrencyInput({ className, error, errorMessage, ...rest }: InputProps) {
   const inputClassName = twMerge(
     "rounded-lg border border-gray-300 bg-white p-2 text-sm font-normal text-primaryDarker placeholder-black placeholder-opacity-20 outline-none transition-all focus:ring-1 focus:ring-primary",
     error ? "border-red-500" : "",
@@ -15,7 +15,7 @@ export default function CurrencyInput({ className, error, errorMessage, ...props
 
   return (
     <div className="flex w-full flex-col">
-      <_CurrencyInput lang="pt-BR" className={inputClassName} intlConfig={{ locale: "en-Us", currency: "BRL" }} {...props} />
+      <_CurrencyInput lang="en-US" className={inputClassName} intlConfig={{ locale: "en-US", currency: "USD" }} {...rest} />
       {error && errorMessage && <div className="text-red-500 mt-1 text-xs">{errorMessage}</div>}
     </div>
   );

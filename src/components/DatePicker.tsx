@@ -12,7 +12,7 @@ interface InputProps extends ReactDatePickerProps {
   errorMessage?: string;
 }
 
-function DatePicker({ className, error, errorMessage, ...props }: InputProps, ref: LegacyRef<HTMLInputElement> | undefined) {
+function DatePicker({ className, error, errorMessage, ...rest }: InputProps, ref: LegacyRef<HTMLInputElement> | undefined) {
   const datePickerClassName = twMerge(
     "rounded-lg border border-gray-300 bg-white p-2 text-sm font-normal text-primaryDarker placeholder-black placeholder-opacity-20 outline-none transition-all focus:ring-1 focus:ring-primary",
     error ? "border-red-500" : "",
@@ -21,7 +21,7 @@ function DatePicker({ className, error, errorMessage, ...props }: InputProps, re
 
   return (
     <div className="flex w-full flex-col">
-      <_DatePicker locale="pt-BR" wrapperClassName="w-full" className={datePickerClassName} enableTabLoop={false} {...props} />
+      <_DatePicker locale="en-US" wrapperClassName="w-full" className={datePickerClassName} enableTabLoop={false} {...rest} />
       {error && errorMessage && <div className="text-red-500 mt-1 text-xs">{errorMessage}</div>}
     </div>
   );
