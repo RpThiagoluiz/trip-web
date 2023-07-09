@@ -21,8 +21,6 @@ async function getTripDetails(tripId: string) {
 export default async function TripDetails({ params }: Props) {
   const tripDetails = await getTripDetails(params.tripId);
 
-  console.log(tripDetails);
-
   //TODO: create empty component or error boundary
   if (!tripDetails) return null;
 
