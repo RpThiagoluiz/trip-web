@@ -19,6 +19,21 @@ interface TripReservationForm {
   endDate: Date | null;
 }
 
+const formatTotalPrice = (
+  startDate: Date | null,
+  endDate: Date | null,
+  tripPricePerDay: number
+): string => {
+  if (startDate && endDate) {
+    const diffInDays = differenceInDays(endDate, startDate);
+    return diffInDays > 0
+      ? `$${(diffInDays * tripPricePerDay) / 100}`
+      : `$${tripPricePerDay / 100}`;
+  }
+
+  return '$0';
+};
+
 export default function TripReservation({
   tripMaxGuests,
   tripPricePerDay,
@@ -110,11 +125,7 @@ export default function TripReservation({
       <div className="flex justify-between mt-3">
         <p className="font-medium text-sm text-primaryDarker">Total: </p>
         <p className="font-medium text-sm text-primaryDarker">
-          {startDate && endDate
-            ? `$${
-                (differenceInDays(endDate, startDate) * tripPricePerDay) / 100
-              }` ?? 1
-            : '$0'}
+          {formatTotalPrice(startDate, endDate, tripPricePerDay)}
         </p>
       </div>
 
