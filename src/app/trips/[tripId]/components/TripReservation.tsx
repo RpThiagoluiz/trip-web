@@ -3,11 +3,14 @@
 import Button from '@/components/Button';
 import DatePicker from '@/components/DatePicker';
 import Input from '@/components/Input';
-import { Trip } from '@prisma/client';
+import { differenceInDays } from 'date-fns';
 import { Controller, useForm } from 'react-hook-form';
 
 interface Props {
-  tripDetails: Trip;
+  tripStartDate: Date;
+  tripEndDate: Date;
+  tripMaxGuests: number;
+  tripPricePerDay: number;
 }
 
 interface TripReservationForm {
@@ -16,7 +19,12 @@ interface TripReservationForm {
   endDate: Date | null;
 }
 
-export default function TripReservation({ tripDetails }: Props) {
+export default function TripReservation({
+  tripMaxGuests,
+  tripPricePerDay,
+  tripStartDate,
+  tripEndDate,
+}: Props) {
   const {
     register,
     handleSubmit,
@@ -28,6 +36,7 @@ export default function TripReservation({ tripDetails }: Props) {
 
   const startDate = watch('startDate');
   const endDate = watch('endDate');
+  //TODO: always when startDate change endDate need to be reset
 
   const onSubmit = (data: any) => {
     console.log(data);
@@ -53,7 +62,7 @@ export default function TripReservation({ tripDetails }: Props) {
               selected={field.value}
               placeholderText="Initial Date"
               className="w-full"
-              minDate={tripDetails.startDate}
+              minDate={tripStartDate}
             />
           )}
         />
@@ -75,8 +84,9 @@ export default function TripReservation({ tripDetails }: Props) {
               selected={field.value}
               placeholderText="Final Date"
               className="w-full"
-              maxDate={tripDetails.endDate}
-              minDate={startDate ?? tripDetails.startDate}
+              maxDate={tripEndDate}
+              minDate={startDate ?? tripStartDate}
+              disabled={!startDate}
             />
           )}
         />
@@ -88,20 +98,24 @@ export default function TripReservation({ tripDetails }: Props) {
             message: 'Number of guests cannot be empty',
           },
           max: {
-            value: tripDetails.maxGuests,
-            message: `Max number of guests are ${tripDetails.maxGuests}.`,
+            value: tripMaxGuests,
+            message: `Max number of guests are ${tripMaxGuests}.`,
           },
         })}
         error={!!errors?.guests}
         errorMessage={errors?.guests?.message}
         className="mt-4"
-        placeholder={`Number of Guess (max: ${tripDetails.maxGuests})`}
+        placeholder={`Number of Guess (max: ${tripMaxGuests})`}
       />
       <div className="flex justify-between mt-3">
+        <p className="font-medium text-sm text-primaryDarker">Total: </p>
         <p className="font-medium text-sm text-primaryDarker">
-          Total (7 nights):
+          {startDate && endDate
+            ? `$${
+                (differenceInDays(endDate, startDate) * tripPricePerDay) / 100
+              }` ?? 1
+            : '$0'}
         </p>
-        <p className="font-medium text-sm text-primaryDarker">$ 2500</p>
       </div>
 
       <div className="w-full pb-10 border-b border-grayLighter">
