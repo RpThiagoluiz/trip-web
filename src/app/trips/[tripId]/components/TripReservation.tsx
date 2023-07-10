@@ -5,8 +5,11 @@ import DatePicker from '@/components/DatePicker';
 import Input from '@/components/Input';
 import { differenceInDays } from 'date-fns';
 import { Controller, useForm } from 'react-hook-form';
+import { type PostReservation, postReservation } from '../utils/postResevation';
+import { MAPPED_ERROS } from '../utils/mappedErros';
 
 interface Props {
+  tripId: string;
   tripStartDate: Date;
   tripEndDate: Date;
   tripMaxGuests: number;
@@ -35,6 +38,7 @@ const formatTotalPrice = (
 };
 
 export default function TripReservation({
+  tripId,
   tripMaxGuests,
   tripPricePerDay,
   tripStartDate,
@@ -52,9 +56,43 @@ export default function TripReservation({
   const startDate = watch('startDate');
   const endDate = watch('endDate');
   //TODO: always when startDate change endDate need to be reset
+  // TODO: disable button if fields are empty
+  //TODO: add type guardian
+  const onSubmit = async (data: TripReservationForm) => {
+    if (!data.startDate && !data.endDate) return null;
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+    const payload: PostReservation = {
+      tripId,
+      startDate: data.startDate as Date,
+      endDate: data.endDate as Date,
+    };
+
+    const res = await postReservation(payload);
+
+    if (res?.error?.code) {
+      const error = MAPPED_ERROS[res?.error?.code as keyof typeof MAPPED_ERROS];
+
+      if (error.field !== 'bothDate') {
+        return setError(error.field, {
+          type: 'manual',
+          message: error.message,
+        });
+      } else {
+        setError('startDate', {
+          type: 'manual',
+          message: error.message,
+        });
+
+        setError('endDate', {
+          type: 'manual',
+          message: error.message,
+        });
+
+        return;
+      }
+    }
+
+    console.log('postReservation', res);
   };
 
   return (
