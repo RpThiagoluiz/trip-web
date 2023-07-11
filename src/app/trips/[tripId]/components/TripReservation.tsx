@@ -3,6 +3,7 @@
 import Button from '@/components/Button';
 import DatePicker from '@/components/DatePicker';
 import Input from '@/components/Input';
+import { useRouter } from 'next/navigation';
 import { differenceInDays } from 'date-fns';
 import { Controller, useForm } from 'react-hook-form';
 import { type PostReservation, postReservation } from '../utils/postResevation';
@@ -55,6 +56,9 @@ export default function TripReservation({
 
   const startDate = watch('startDate');
   const endDate = watch('endDate');
+
+  const router = useRouter();
+
   //TODO: always when startDate change endDate need to be reset
   // TODO: disable button if fields are empty
   //TODO: add type guardian
@@ -92,7 +96,11 @@ export default function TripReservation({
       }
     }
 
-    console.log('postReservation', res);
+    router.push(
+      `/trips/${tripId}/confirmation?startDate=${data.startDate?.toISOString()}&endDate=${data.endDate?.toISOString()}&guests=${
+        data.guests
+      }`
+    );
   };
 
   return (
