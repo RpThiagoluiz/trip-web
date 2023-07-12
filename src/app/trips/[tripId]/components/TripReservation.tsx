@@ -162,6 +162,10 @@ export default function TripReservation({
             value: tripMaxGuests,
             message: `Max number of guests are ${tripMaxGuests}.`,
           },
+          min: {
+            value: 1,
+            message: `Min number of guests is one.`,
+          },
         })}
         error={!!errors?.guests}
         errorMessage={errors?.guests?.message}

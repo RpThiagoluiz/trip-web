@@ -46,6 +46,7 @@ export default function TripConfirmation({
     };
 
     if (status === 'unauthenticated') {
+      //TODO: não permitir que o usuário chegue aqui.
       router.push('/');
     }
 
