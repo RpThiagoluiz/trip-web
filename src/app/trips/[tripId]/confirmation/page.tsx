@@ -59,6 +59,21 @@ export default function TripConfirmation({
   const endDate = new Date(searchParams.get('endDate') as string);
   const guests = searchParams.get('guests');
 
+  const handleCheckout = async () => {
+    await fetch('http://localhost:3000/api/trips/reservation', {
+      method: 'POST',
+      body: Buffer.from(
+        JSON.stringify({
+          tripId: params.tripId,
+          startDate: searchParams.get('startDate'),
+          endDate: searchParams.get('endDate'),
+          guests: searchParams.get('guests'),
+          totalPrice,
+        })
+      ),
+    });
+  };
+
   return (
     <div className="container mx-auto p-5 lg:max-w-[600px]">
       <h1 className="font-semibold text-xl text-primaryDarker">Your Trip</h1>
