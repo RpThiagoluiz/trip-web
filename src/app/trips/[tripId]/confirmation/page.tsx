@@ -9,6 +9,7 @@ import Image from 'next/image';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import ReactCountryFlag from 'react-country-flag';
+import { toast } from 'react-toastify';
 
 export default function TripConfirmation({
   params,
@@ -20,7 +21,7 @@ export default function TripConfirmation({
 
   const router = useRouter();
 
-  const { status } = useSession();
+  const { status, data } = useSession();
   const searchParams = useSearchParams();
 
   useEffect(() => {
@@ -60,18 +61,32 @@ export default function TripConfirmation({
   const guests = searchParams.get('guests');
 
   const handleCheckout = async () => {
-    await fetch('http://localhost:3000/api/trips/reservation', {
+    const payload = {
+      userId: data?.user?.id,
+      tripId: params.tripId,
+      startDate: searchParams.get('startDate'),
+      endDate: searchParams.get('endDate'),
+      guests: Number(searchParams.get('guests')),
+      totalPaid: totalPrice, //TODO: poderá haver cupom de descontos que irão alterar o valor do totalPrice
+    };
+
+    const res = await fetch('http://localhost:3000/api/trips/reservation', {
       method: 'POST',
-      body: Buffer.from(
-        JSON.stringify({
-          tripId: params.tripId,
-          startDate: searchParams.get('startDate'),
-          endDate: searchParams.get('endDate'),
-          guests: searchParams.get('guests'),
-          totalPrice,
-        })
-      ),
+      body: Buffer.from(JSON.stringify(payload)),
     });
+
+    if (!res.ok) {
+      toast.error('Sorry, try again latter!');
+      return;
+    }
+
+    toast.success('Your trip is reservation, enjoy!', {
+      position: 'bottom-center',
+    });
+    //TODO: mover para a tela das minha viagens
+    setTimeout(() => {
+      router.push('/');
+    }, 350);
   };
 
   return (
@@ -125,7 +140,7 @@ export default function TripConfirmation({
         <h3 className="font-semibold mt-5">Guests</h3>
         <p>{guests} Guests</p>
 
-        <Button className="mt-5" onClick={() => {}}>
+        <Button className="mt-5" onClick={handleCheckout}>
           Checkout
         </Button>
       </div>
